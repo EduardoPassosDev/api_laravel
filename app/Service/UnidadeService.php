@@ -12,9 +12,12 @@ class UnidadeService
         return Unidade::all()->map(fn(Unidade $unidade) => UnidadeMapper::toDto($unidade));
     }
 
-    public function  criarUnidade(array $dados): UnidadeDTO
+    public function criarUnidade(array $dados): UnidadeDTO
     {
-        $dto = new UnidadeDTO($dados);
+        $dto = new UnidadeDTO(
+            nome: $dados['nome'],
+            sigla: $dados['sigla'] ?? null
+        );
 
         $unidade = UnidadeMapper::toModel($dto);
         $unidade->save();

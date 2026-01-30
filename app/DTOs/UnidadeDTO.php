@@ -8,4 +8,5 @@ class UnidadeDTO
         public string $nome,
         public ?string $sigla
     ) {}
+
 }
