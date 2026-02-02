@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CriarUsuarioRequest;
 use App\Service\UserService;
+use Illuminate\Http\JsonResponse;
 
 class UserController extends Controller
 {
@@ -16,11 +17,9 @@ class UserController extends Controller
         return response()->json($this->userService->buscarTodosUsuarios());
     }
 
-    public function criarUsuario(CriarUsuarioRequest $request){
-        $usuario = $this->userService->criarUsuario(
-            $request->validated()
-        );
-
+    public function criarUsuario(CriarUsuarioRequest $request): JsonResponse
+    {
+        $usuario = $this->userService->criarUsuario($request->validated());
         return response()->json($usuario, 201);
     }
 

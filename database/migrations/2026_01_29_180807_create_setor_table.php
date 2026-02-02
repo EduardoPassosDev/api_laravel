@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('setor', function (Blueprint $table) {
+        Schema::create('setors', function (Blueprint $table) {
             $table->id();
             $table->string('nome');
-            $table->foreignId('unidade_id')->references('id')->on('unidade');
+            $table->foreignId('unidade_id')->references('id')->on('unidades');
             $table->string('sigla')->nullable();
             $table->timestamps();
         });

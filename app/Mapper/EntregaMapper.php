@@ -3,7 +3,7 @@
 namespace App\Mapper;
 
 use App\DTOs\EntregaDTO;
-use App\DTOs\EntregaTamanho;
+use App\Enums\EntregaTamanho;
 use App\Models\Entrega;
 
 class EntregaMapper
@@ -23,7 +23,7 @@ class EntregaMapper
     {
         return new EntregaDTO(
             recebido_por: $entrega->recebido_por,
-            tamanho_pacote: EntregaTamanho::from($entrega->tamanho_pacote),
+            tamanho_pacote: $entrega->tamanho_pacote,
             descricao: $entrega->descricao
         );
     }

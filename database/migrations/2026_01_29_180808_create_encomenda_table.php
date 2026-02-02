@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('encomenda', function (Blueprint $table) {
+        Schema::create('encomendas', function (Blueprint $table) {
             $table->id();
             $table->string('nome_completo')->nullable();
-            $table->foreignId('setor_id')->references('id')->on('setor');
+            $table->foreignId('setor_id')->references('id')->on('setors');
             $table->text('descricao')->nullable();
             $table->boolean('is_coletado')->default(false);
-            $table->foreignId('unidade_id')->references('id')->on('unidade');
+            $table->foreignId('unidade_id')->references('id')->on('unidades');
             $table->timestamps();
         });
     }

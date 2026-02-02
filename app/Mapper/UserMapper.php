@@ -13,11 +13,7 @@ class UserMapper
         $user = new User();
         $user->name = $dto->name;
         $user->email = $dto->email;
-
-        if($dto->password){
-            $user->password = $dto->password;
-        }
-
+        $user->password = $dto->password ?? null;
         return $user;
     }
 
@@ -25,9 +21,8 @@ class UserMapper
     {
         return new UserDTO([
             'name' => $user->name,
-            'email' => $user->email
+            'email' => $user->email,
         ]);
     }
-
 
 }
