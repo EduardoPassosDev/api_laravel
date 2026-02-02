@@ -7,6 +7,7 @@ use App\Mapper\UserMapper;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
 
 class UserService
 {
@@ -21,8 +22,7 @@ class UserService
 
     public function criarUsuario(array $dados): UserDTO
     {
-        $dto = new UserDTO($dados);
-        $dto->hashPassword();
+        $dto = UserDTO::fromArray($dados);
 
         $user = UserMapper::toModel($dto);
         $user->save();
@@ -57,7 +57,23 @@ class UserService
         return (bool) User::destroy($id);
     }
 
+    public function login(array $dados): UserDTO
+    {
+        $user = User::where('email', $dados['email'])->first();
 
+        if (!$user) {
+            throw ValidationException::withMessages([
+                'email' => 'Usuário não encontrado'
+            ]);
+        }
 
+        if (!Hash::check($dados['password'], $user->password)) {
+            throw ValidationException::withMessages([
+                'password' => 'Senha inválida'
+            ]);
+        }
+
+        return UserMapper::toDto($user);
+    }
 
 }

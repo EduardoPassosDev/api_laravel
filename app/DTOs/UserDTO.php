@@ -2,26 +2,41 @@
 
 namespace App\DTOs;
 
+use App\Models\User;
+
 class UserDTO
 {
+    public function __construct(
+        public int $id,
+        public string $name,
+        public string $email,
+        public ?string $password = null
+    ) {}
 
-    public string $name;
-    public string $email;
-    public ?string $password;
-
-    public function __construct(array $data)
+    public static function fromArray(array $data): self
     {
-        $this->name = $data['name'];
-        $this->email = $data['email'];
-        $this->password = $data['password'] ?? null;
+        return new self(
+            id: $data['id'] ?? 0,
+            name: $data['name'],
+            email: $data['email'],
+            password: $data['password'] ?? null
+        );
+    }
+
+    public static function fromModel(User $user): self
+    {
+        return new self(
+            id: $user->id,
+            name: $user->name,
+            email: $user->email
+        );
     }
 
     public function hashPassword(): void
     {
-        if ($this->password) {
+        if ($this->password !== null) {
             $this->password = bcrypt($this->password);
         }
     }
-
 
 }

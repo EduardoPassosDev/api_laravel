@@ -20,6 +20,7 @@ Route::post('/users', [UserController::class, 'criarUsuario']);
 Route::get('/users/{id}', [UserController::class, 'buscarUsuarioPorId']);
 Route::patch('/users/{id}', [UserController::class, 'atualizarUsuario']);
 Route::delete('/users/{id}', [UserController::class, 'deletarUsuario']);
+Route::post('/login', [UserController::class, 'login']);
 
 Route::get('/unidades', [UnidadeController::class, 'buscarTodasUnidade']);
 Route::post('/unidades', [UnidadeController::class, 'criarUnidade']);

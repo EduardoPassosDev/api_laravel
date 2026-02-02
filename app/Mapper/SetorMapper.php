@@ -21,6 +21,7 @@ class SetorMapper
     public static function toDto(Setor $model): SetorDTO
     {
         return new SetorDTO(
+            id: $model->id ?? 0,
             nome: $model->nome,
             sigla: $model->sigla,
             unidadeId: $model->unidade_id

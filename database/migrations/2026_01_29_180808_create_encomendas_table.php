@@ -11,11 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('setors', function (Blueprint $table) {
+        Schema::create('encomendas', function (Blueprint $table) {
             $table->id();
-            $table->string('nome');
+            $table->string('nome_completo')->nullable();
+            $table->foreignId('setor_id')->references('id')->on('setors');
+            $table->text('descricao')->nullable();
+            $table->boolean('is_coletado')->default(false);
             $table->foreignId('unidade_id')->references('id')->on('unidades');
-            $table->string('sigla')->nullable();
             $table->timestamps();
         });
     }
@@ -25,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('setor');
+        Schema::dropIfExists('encomendas');
     }
 };

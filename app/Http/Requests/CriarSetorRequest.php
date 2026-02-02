@@ -24,7 +24,7 @@ class CriarSetorRequest extends FormRequest
         return [
             'nome' => 'required|max:100',
             'sigla' => 'required|max:10',
-            'unidade_id' => 'required|exists:unidade,id',
+            'unidade_id' => 'required|exists:unidades,id',
         ];
     }
 

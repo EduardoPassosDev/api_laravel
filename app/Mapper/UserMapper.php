@@ -13,16 +13,17 @@ class UserMapper
         $user = new User();
         $user->name = $dto->name;
         $user->email = $dto->email;
-        $user->password = $dto->password ?? null;
+
+        if ($dto->password !== null) {
+            $user->password = $dto->password;
+        }
+
         return $user;
     }
 
     public static function toDto(User $user): UserDTO
     {
-        return new UserDTO([
-            'name' => $user->name,
-            'email' => $user->email,
-        ]);
+        return UserDTO::fromModel($user);
     }
 
 }

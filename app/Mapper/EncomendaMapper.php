@@ -22,6 +22,7 @@ class EncomendaMapper
     public static function toDto(Encomenda $encomenda): EncomendaDTO
     {
         return new EncomendaDTO(
+            id: $encomenda->id ?? 0,
             setor_id: $encomenda->setor_id,
             unidade_id: $encomenda->unidade_id,
             nome_completo: $encomenda->nome_completo,

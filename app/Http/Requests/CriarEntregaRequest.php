@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Enums\EntregaTamanho;
+use App\Enums\tamanhoPacote;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Enum;
 
@@ -25,7 +26,7 @@ class CriarEntregaRequest extends FormRequest
     {
         return [
             'recebido_por' => 'required|string',
-            'tamanho_pacote' => 'required', new Enum(EntregaTamanho::class),
+            'tamanho_pacote' => 'required', new Enum(tamanhoPacote::class),
             'descricao' => 'required|string',
         ];
     }

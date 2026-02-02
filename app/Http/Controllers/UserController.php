@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CriarUsuarioRequest;
+use App\Http\Requests\LoginRequest;
 use App\Service\UserService;
 use Illuminate\Http\JsonResponse;
 
@@ -50,6 +51,19 @@ class UserController extends Controller
     public function deletarUsuario(int $id){
         $this->userService->deletarUsuario($id);
         return response()->json(null, 200);
+    }
+
+    public function login(LoginRequest $request): JsonResponse
+    {
+        $userDto = $this->userService->login($request->validated());
+
+        return response()->json([
+            'message' => 'Login realizado com sucesso',
+            'data' => [
+                'name'  => $userDto->name,
+                'email' => $userDto->email,
+            ]
+        ]);
     }
 
 }

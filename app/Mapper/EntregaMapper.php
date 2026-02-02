@@ -22,6 +22,7 @@ class EntregaMapper
     public static function toDto(Entrega $entrega): EntregaDTO
     {
         return new EntregaDTO(
+            id: $entrega->id ?? 0,
             recebido_por: $entrega->recebido_por,
             tamanho_pacote: $entrega->tamanho_pacote,
             descricao: $entrega->descricao

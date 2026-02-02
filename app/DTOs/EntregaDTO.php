@@ -8,6 +8,7 @@ use InvalidArgumentException;
 class EntregaDTO
 {
     public function __construct(
+        public int $id,
         public string        $recebido_por,
         public TamanhoPacote $tamanho_pacote,
         public ?string       $descricao = null
@@ -30,6 +31,7 @@ class EntregaDTO
     public static function fromArray(array $data): self
     {
         return new self(
+            id: $data['id'] ?? 0,
             recebido_por: trim($data['recebido_por']),
             tamanho_pacote: self::parseTamanhoPacote($data['tamanho_pacote']),
             descricao: $data['descricao'] ?? null

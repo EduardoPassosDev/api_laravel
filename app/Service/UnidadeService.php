@@ -14,10 +14,7 @@ class UnidadeService
 
     public function criarUnidade(array $dados): UnidadeDTO
     {
-        $dto = new UnidadeDTO(
-            nome: $dados['nome'],
-            sigla: $dados['sigla'] ?? null
-        );
+        $dto = UnidadeMapper::toDto($dados);
 
         $unidade = UnidadeMapper::toModel($dto);
         $unidade->save();
@@ -36,6 +33,7 @@ class UnidadeService
         $unidade = Unidade::findOrFail($id);
 
         $unidade->update([
+            'id' => $dto->id,
             'nome' => $dto->nome,
             'sigla' => $dto->sigla,
         ]);
