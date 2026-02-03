@@ -22,6 +22,11 @@ Route::patch('/users/{id}', [UserController::class, 'atualizarUsuario']);
 Route::delete('/users/{id}', [UserController::class, 'deletarUsuario']);
 Route::post('/login', [UserController::class, 'login']);
 
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/logout', [UserController::class, 'logout']);
+    Route::post('/logout-all', [UserController::class, 'logoutAll']);
+});
+
 Route::get('/unidades', [UnidadeController::class, 'buscarTodasUnidade']);
 Route::post('/unidades', [UnidadeController::class, 'criarUnidade']);
 Route::get('/unidades/{id}', [UnidadeController::class, 'buscarUnidadePorId']);

@@ -11,12 +11,8 @@ use Illuminate\Validation\ValidationException;
 
 class UserService
 {
-
-    public function __construct(
-    ){}
-
-
-    public function buscarTodosUsuarios(){
+    public function buscarTodosUsuarios()
+    {
         return User::all()->map(fn(User $user) => UserMapper::toDto($user));
     }
 
@@ -40,7 +36,7 @@ class UserService
     {
         $user = User::findOrFail($id);
 
-        if(isset($dados['password'])){
+        if (isset($dados['password'])) {
             $dados['password'] = Hash::make($dados['password']);
         }
 
@@ -53,27 +49,36 @@ class UserService
         return UserMapper::toDto($user);
     }
 
-    public function deletarUsuario(int $id): bool{
-        return (bool) User::destroy($id);
-    }
-
-    public function login(array $dados): UserDTO
+    public function deletarUsuario(int $id): bool
     {
-        $user = User::where('email', $dados['email'])->first();
-
-        if (!$user) {
-            throw ValidationException::withMessages([
-                'email' => 'Credenciais inválidas'
-            ]);
-        }
-
-        if (!Hash::check($dados['password'], $user->password)) {
-            throw ValidationException::withMessages([
-                'password' => 'Credenciais inválidas'
-            ]);
-        }
-
-        return UserMapper::toDto($user);
+        return (bool)User::destroy($id);
     }
+
+    public function login(string $email, string $password): string
+    {
+        $user = User::where('email', $email)->first();
+
+        if (!$user || !Hash::check($password, $user->password)) {
+            throw ValidationException::withMessages([
+                'email' => ['Credenciais inválidas']
+            ]);
+        }
+
+        // Gera token Sanctum
+        return $user->createToken('api-token')->plainTextToken;
+    }
+
+    public function logout(User $user): void
+    {
+        // Remove apenas o token atual
+        $user->currentAccessToken()->delete();
+    }
+
+    public function logoutAll(User $user): void
+    {
+        // Remove todos os tokens
+        $user->tokens()->delete();
+    }
+
 
 }

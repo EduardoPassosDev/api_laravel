@@ -33,6 +33,8 @@ class CriarUsuarioRequest extends FormRequest
         return [
             'name.required' => 'Nome é obrigatório',
             'email.email'   => 'Email inválido',
+            'email.unique' => 'O email já existe',
+            'email.required' => 'O email é Obrigatorio',
             'password.min'     => 'Senha deve ter no mínimo 6 caracteres',
             'password.required' => 'A senha é Obrigátorio'
         ];

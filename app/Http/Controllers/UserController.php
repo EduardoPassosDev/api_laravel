@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CriarUsuarioRequest;
-use App\Http\Requests\LoginRequest;
+use Illuminate\Http\Request;
 use App\Service\UserService;
 use Illuminate\Http\JsonResponse;
 
@@ -53,16 +53,39 @@ class UserController extends Controller
         return response()->json(null, 200);
     }
 
-    public function login(LoginRequest $request): JsonResponse
+    public function login(Request $request)
     {
-        $userDto = $this->userService->login($request->validated());
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required'
+        ]);
+
+        $token = $this->userService->login(
+            $request->email,
+            $request->password
+        );
 
         return response()->json([
-            'message' => 'Login realizado com sucesso',
-            'data' => [
-                'name'  => $userDto->name,
-                'email' => $userDto->email,
-            ]
+            'token' => $token,
+            'type' => 'Bearer'
+        ]);
+    }
+
+    public function logout(Request $request)
+    {
+        $this->userService->logout($request->user());
+
+        return response()->json([
+            'message' => 'Logout realizado com sucesso'
+        ]);
+    }
+
+    public function logoutAll(Request $request)
+    {
+        $this->userService->logoutAll($request->user());
+
+        return response()->json([
+            'message' => 'Logout realizado em todos os dispositivos'
         ]);
     }
 
