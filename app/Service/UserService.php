@@ -63,13 +63,13 @@ class UserService
 
         if (!$user) {
             throw ValidationException::withMessages([
-                'email' => 'Usuário não encontrado'
+                'email' => 'Credenciais inválidas'
             ]);
         }
 
         if (!Hash::check($dados['password'], $user->password)) {
             throw ValidationException::withMessages([
-                'password' => 'Senha inválida'
+                'password' => 'Credenciais inválidas'
             ]);
         }
 
